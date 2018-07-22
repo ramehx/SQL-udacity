@@ -1,0 +1,44 @@
+#Aggregation Questions
+
+#Find the total amount of poster_qty paper ordered in the orders table.
+#Find the total amount of standard_qty paper ordered in the orders table.
+#Find the total dollar amount of sales using the total_amt_usd in the orders table.
+# Find the total amount spent on standard_amt_usd and gloss_amt_usd paper for each order in the orders table. 
+# Find the standard_amt_usd per unit of standard_qty paper. 
+
+SELECT SUM(poster_qty) as poster,
+SUM(standard_qty) as standard,
+SUM(total_amt_usd) as total_amount,
+SUM(standard_amt_usd +gloss_amt_usd) as total_std_gloss,  
+SUM(standard_amt_usd) / SUM(standard_qty) as unit_standard_price
+FROM orders
+
+#When was the earliest order ever placed? You only need to return the date.
+# When did the most recent (latest) web_event occur?
+SELECT MIN(occurred_at), MAX(occurred_at)
+FROM orders
+
+#Try performing the same query as in question above without using an aggregation function. 
+SELECT occurred_at
+FROM orders
+ORDER BY occurred_at DESC
+LIMIT 1
+
+# Find the mean (AVERAGE) amount spent per order on each paper type, as well as the mean amount of each paper type purchased per order. 
+SELECT AVG(standard_qty) as standard_mean, 
+AVG(gloss_qty) as gloss_mean,
+AVG(poster_qty) as poster_mean,
+AVG(standard_amt_usd) as standard_amt_mean,
+AVG(gloss_amt_usd) as gloss_amt_mean,
+AVG(poster_amt_usd) as poster_amt_mean
+FROM orders
+
+
+#  what is the MEDIAN total_usd spent on all orders? 
+SELECT
+FROM (SELECT total_amt_usd
+      FROM orders
+      ORDER BY total_amt_usd
+      LIMIT 3457) AS Table1
+ORDER BY total_amt_usd DESC
+LIMIT 2;
