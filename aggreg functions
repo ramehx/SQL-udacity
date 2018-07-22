@@ -89,10 +89,61 @@ ORDER BY data
 LIMIT 1
 
 # What was the smallest order placed by each account in terms of total usd. 
-# Provide only two columns - the account name and the total usd. Order from smallest dollar amounts to largest.
-
+SELECT  a.name AS nome, MIN(o.total_amt_usd) AS ordem_total
+FROM accounts a
+JOIN orders o
+ON a.id = o.account_id
+GROUP BY nome
+ORDER BY ordem_total asc
 
 
 # Find the number of sales reps in each region. Your final table should have two columns - the region and the number of sales_reps. 
 # Order from fewest reps to most reps.
+SELECT  r.name as regiao, COUNT (s.name) AS vendedor
+FROM sales_reps s
+JOIN region r
+ON r.id = s.region_id
+GROUP BY regiao
+ORDER BY vendedor asc
 
+
+# For each account, determine the average amount of each type of paper they purchased across their orders. 
+SELECT  a.name AS nome, AVG(o.standard_qty) AS media_std, AVG(o.gloss_qty) AS media_gloss, AVG(o.poster_qty) AS media_poster
+FROM accounts a
+JOIN orders o
+ON a.id = o.account_id
+GROUP BY nome
+
+# For each account, determine the average amount spent per order on each paper type. 
+SELECT a.name AS nome, AVG(o.standard_amt_usd) AS media_std, AVG(o.gloss_amt_usd) AS media_gloss, AVG(o.poster_amt_usd) AS media_poster
+FROM accounts a
+JOIN orders o
+ON a.id = o.account_id
+GROUP BY nome
+
+
+# Determine the number of times a particular channel was used in the web_events table for each sales rep. 
+
+SELECT s.name AS vendedor, w.channel AS canal, COUNT(w.channel) AS numero_ocorrencias
+FROM accounts a 
+JOIN web_events w
+ON a.id = w.account_id
+JOIN sales_reps s
+ON a.sales_rep_id = s.id
+GROUP BY vendedor, canal
+ORDER BY vendedor, canal
+
+
+
+# Determine the number of times a particular channel was used in the web_events table for each region.
+
+SELECT r.name AS regiao, w.channel AS canal, COUNT(w.channel) AS numero_ocorrencias
+FROM accounts a 
+JOIN web_events w
+ON a.id = w.account_id
+JOIN sales_reps s
+ON a.sales_rep_id = s.id
+JOIN region r
+ON r.id = s.region_id
+GROUP BY regiao, canal
+ORDER BY regiao, canal
