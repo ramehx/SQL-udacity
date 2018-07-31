@@ -78,3 +78,14 @@ SELECT first_name, last_name, CONCAT(first_name, '.', last_name, '@', name, '.co
 RIGHT(LOWER(first_name), 1) || LEFT(LOWER(last_name), 1) || RIGHT(LOWER(last_name), 1) || LENGTH(first_name) || LENGTH(last_name) || 
 REPLACE(UPPER(name), ' ', '') AS password
 FROM t1;
+
+
+# Convert date colum in this format (01/31/2014 08:00:00 AM +0000) to SQL correct format
+SELECT date, SUBSTR(date,7,4) || '-' || SUBSTR(date,1,2) ||'-'|| SUBSTR(date,4,2) AS ano
+FROM sf_crime_data
+limit 10
+
+# CONVERT THE NEW STRING INTO DATE TYPE
+SELECT date, CAST(SUBSTR(date,7,4) || '-' || SUBSTR(date,1,2) ||'-'|| SUBSTR(date,4,2) AS date) AS data
+FROM sf_crime_data
+limit 10
