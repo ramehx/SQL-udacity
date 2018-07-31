@@ -32,3 +32,19 @@ FROM (SELECT name, CASE WHEN LEFT(UPPER(name), 1) IN ('A','E','I','O','U')
           CASE WHEN LEFT(UPPER(name), 1) IN ('A','E','I','O','U') 
                        THEN 0 ELSE 1 END AS other
          FROM accounts) t1;
+
+
+##POSITION AND STRPOS
+
+# Use the accounts table to create first and last name columns that hold the first and last names for the primary_poc. 
+SELECT LEFT(primary_poc, STRPOS(primary_poc, ' ') -1 ) AS nome, 
+RIGHT(primary_poc, LENGTH(primary_poc) - STRPOS(primary_poc, ' ')) AS sobrenome
+FROM accounts;
+
+
+# Now see if you can do the same thing for every rep name in the sales_reps table. Again provide first and last name columns.
+
+SELECT name, LEFT (name, STRPOS(name,' ')-1) AS nome,
+RIGHT(name, LENGTH(name)- STRPOS(name,' ')) as sobre
+FROM sales_reps
+limit 5
