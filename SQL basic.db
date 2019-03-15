@@ -64,7 +64,7 @@ LIMIT 10
 SELECT *
 FROM accounts
 WHERE name
-LIKE '%C'
+LIKE 'C%'
 
 # All companies whose names contain the string 'one' somewhere in the name.
 SELECT *
